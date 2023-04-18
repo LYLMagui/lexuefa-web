@@ -1,0 +1,9 @@
+server: # 端口
+  port: 8090
+
+spring:
+  datasource: # 数据源
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    username: root
+    password: 123456Zxc.
+    url: jdbc:mysql://119.91.208.187:3306/law_app?useUnicode=true&characterEncoding=utf-8&serverTimezone=Asia/Shanghai&useSSL=false
