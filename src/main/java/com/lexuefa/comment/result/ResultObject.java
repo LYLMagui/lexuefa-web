@@ -16,7 +16,7 @@ public class ResultObject<T> {
 
     private int code;
     private String message;
-    private T result;
+    private T data;
 
     /**
      * 成功返回结果

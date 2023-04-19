@@ -10,6 +10,6 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 @SpringBootApplication
 public class LeXueFaApplication {
     public static void main(String[] args) {
-        SpringApplication.run(LeXueFaApplication.class);
+        SpringApplication.run(LeXueFaApplication.class,args);
     }
 }

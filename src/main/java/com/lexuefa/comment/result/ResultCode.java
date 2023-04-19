@@ -9,10 +9,6 @@ import lombok.NoArgsConstructor;
  * @author ukir
  * @date 2023/04/18 19:55
  **/
-
-@Data
-@AllArgsConstructor
-@NoArgsConstructor
 public enum ResultCode implements IErrorCode{
     SUCCESS(0,"操作成功"),
     FAILED(500,"操作失败"),
@@ -21,6 +17,14 @@ public enum ResultCode implements IErrorCode{
     FORBIDDEN(403,"没有相关权限");
     private int code;
     private String message;
+
+    public void setCode(int code) {
+        this.code = code;
+    }
+
+    public void setMessage(String message) {
+        this.message = message;
+    }
 
     ResultCode(int code, String message) {
         this.code = code;
