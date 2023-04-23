@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.lexuefa.dao.LegalDao">
+    
+    <select id="queryLawsByArticle" resultType="com.lexuefa.entity.LegalEntity">
+        select
+        d.id AS id,
+        d.legal_no AS legalNo,
+        d.legal_name AS legalName,
+        d.top_category AS topCategory,
+        d.second_category AS secondCategory,
+        d.version AS version,
+        d.activity AS activity,
+        d.is_deleted AS isDeleted,
+        d.publish_time AS publishTime,
+        d.start_time AS startTime,
+        d.document_number AS documentNumber,
+        d.enact_agency AS enactAgency,
+        d.preface AS preface,
+        d.create_time AS createTime,
+        d.update_time AS updateTime
+        from legal_document d
+        left join legal_chapters c on d.legal_no = c.legal_no
+        where d.second_category = #{legalReqParam.secondCategory}
+        <if test="legalReqParam.article != null and legalReqParam.article != ''">
+            and c.article like CONCAT('%',#{legalReqParam.article},'%')
+        </if>
+        group by d.legal_name
+    </select>
+    
+</mapper>

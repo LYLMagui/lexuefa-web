@@ -11,12 +11,26 @@ public class LegalReqParam {
     /**
      * 法律标题
      */
-    public String legalTitle;
+    public String legalName;
 
     /**
-     * 法律内容
+     * 条文内容
      */
-    public String legalContent;
+    public String article;
+
+    /**
+     * 一级分类
+     */
+    public String topCategory;
+    /**
+     * 二级分类
+     */
+    public String secondCategory;
+
+    /**
+     * 法律编号
+     */
+    public String legalNo;
     
     public int pageNo;
     
