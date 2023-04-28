@@ -1,4 +1,4 @@
-package com.lexuefa.entity;
+package com.lexuefa.entity.legal;
 
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableField;
@@ -13,13 +13,10 @@ import lombok.Data;
 @Data
 @TableName("legal_type")
 public class LegalType {
-
     @TableId(type = IdType.AUTO)
     private Integer id;
-
     @TableField(value = "top_category")
     private String topCategory;
-
     @TableField(value = "top_name")
     private String topName;
     @TableField(value = "second_category")

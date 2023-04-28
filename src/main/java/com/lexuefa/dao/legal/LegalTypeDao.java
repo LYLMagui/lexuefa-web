@@ -1,7 +1,7 @@
-package com.lexuefa.dao;
+package com.lexuefa.dao.legal;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
-import com.lexuefa.entity.LegalType;
+import com.lexuefa.entity.legal.LegalType;
 import org.apache.ibatis.annotations.Mapper;
 
 @Mapper

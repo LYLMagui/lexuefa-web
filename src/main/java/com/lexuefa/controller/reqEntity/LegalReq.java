@@ -1,4 +1,4 @@
-package com.lexuefa.controller.requestEntity;
+package com.lexuefa.controller.reqEntity;
 
 import lombok.Data;
 
@@ -7,7 +7,7 @@ import lombok.Data;
  * @date 2023/04/19 21:08
  **/
 @Data
-public class LegalReqParam {
+public class LegalReq {
     /**
      * 法律标题
      */

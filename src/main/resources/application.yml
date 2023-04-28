@@ -6,8 +6,13 @@ spring:
     driver-class-name: com.mysql.cj.jdbc.Driver
     username: root
     password: 123456Zxc.
-    url: jdbc:mysql://119.91.208.187:3306/law_app?useUnicode=true&characterEncoding=utf-8&serverTimezone=Asia/Shanghai&useSSL=false
-
+    url: jdbc:mysql://gz-cynosdbmysql-grp-23k8mj83.sql.tencentcdb.com:25441/lexuefa?useUnicode=true&characterEncoding=utf-8&serverTimezone=Asia/Shanghai&useSSL=false
+  
+  # redis配置
+  redis:
+    host: 119.91.208.187
+    port: 6379
+    password: 123456Zxc.
 
 mybatis-plus:
   configuration: # mybatis-plus 配置

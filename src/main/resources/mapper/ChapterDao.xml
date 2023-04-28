@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.lexuefa.dao.legal.ChapterDao">
+    
+    <select id="selectAtricles" resultType="com.lexuefa.entity.legal.Article">
+        select distinct article_no articleNo, article
+        from legal_chapters
+        where chapter = #{chapter}
+          and legal_no = #{legalNo}
+        <if test="sectionNo != null and sectionNo != ''">
+            and section_no = #{sectionNo}
+        </if>
+        order by article_no ASC
+    </select>
+
+    <select id="selectSection" resultType="com.lexuefa.entity.legal.Section">
+        select distinct section_no sectionNo, section_title sectionTitle
+        from legal_chapters
+        where chapter = #{chapter}
+        and legal_no = #{legalNo}
+        and section_no is not null
+        order by section_no ASC
+    </select>
+    
+    <select id="selectChapters" resultType="com.lexuefa.entity.legal.Chapter">
+        SELECT distinct id, legal_no as legalNo, chapter, chapter_title as chapterTitle, section_no as sectionNO, section_title as sectionTitle
+        FROM legal_chapters
+        WHERE (legal_no = #{legalNo})
+        GROUP BY chapter
+        ORDER BY chapter,section_no ASC
+    </select>
+    
+</mapper>

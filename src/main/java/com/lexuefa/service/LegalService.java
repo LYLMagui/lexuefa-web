@@ -2,9 +2,10 @@ package com.lexuefa.service;
 
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.IService;
-import com.lexuefa.controller.requestEntity.LegalReqParam;
-import com.lexuefa.entity.LegalEntity;
-import com.lexuefa.entity.LegalType;
+import com.lexuefa.controller.reqEntity.LegalReq;
+import com.lexuefa.entity.legal.Chapter;
+import com.lexuefa.entity.legal.Legal;
+import com.lexuefa.entity.legal.LegalType;
 
 import java.util.List;
 
@@ -13,13 +14,13 @@ import java.util.List;
  * @author ukir
  * @date 2023/04/19 20:53
  **/
-public interface LegalService extends IService<LegalEntity> {
+public interface LegalService extends IService<Legal> {
     /**
      * 查询法律列表
-     * @param legalReqParam
+     * @param legalReq
      * @return
      */
-    Page<LegalEntity> queryLawList(LegalReqParam legalReqParam);
+    Page<Legal> queryLawList(LegalReq legalReq);
 
     /**
      * 查询法律分类列表
@@ -35,8 +36,15 @@ public interface LegalService extends IService<LegalEntity> {
 
     /**
      * 根据内容查询法律
-     * @param legalReqParam
+     * @param legalReq
      * @return
      */
-    Page<LegalEntity> queryLawsByArticle(LegalReqParam legalReqParam);
+    Page<Legal> queryLawsByArticle(LegalReq legalReq);
+
+    /**
+     * 查询法律内容
+     * @param legalReq
+     * @return
+     */
+    List<Chapter> querylegalContent(LegalReq legalReq);
 }

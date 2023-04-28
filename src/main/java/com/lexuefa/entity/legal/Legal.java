@@ -1,9 +1,6 @@
-package com.lexuefa.entity;
+package com.lexuefa.entity.legal;
 
-import com.baomidou.mybatisplus.annotation.IdType;
-import com.baomidou.mybatisplus.annotation.TableField;
-import com.baomidou.mybatisplus.annotation.TableId;
-import com.baomidou.mybatisplus.annotation.TableName;
+import com.baomidou.mybatisplus.annotation.*;
 import lombok.Data;
 import lombok.experimental.Accessors;
 
@@ -20,7 +17,7 @@ import java.time.LocalDateTime;
 @Data
 @Accessors(chain = true)
 @TableName("legal_document")
-public class LegalEntity implements Serializable {
+public class Legal implements Serializable {
     private static final long serialVersionUID = 1L;
 
     @TableId(value = "id",type = IdType.AUTO)
@@ -45,6 +42,7 @@ public class LegalEntity implements Serializable {
     private Integer activity;
 
     @TableField(value = "is_deleted")
+    @TableLogic
     private Integer isDeleted;
 
     @TableField(value = "publish_time")

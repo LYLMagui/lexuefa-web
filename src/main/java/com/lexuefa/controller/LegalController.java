@@ -2,12 +2,12 @@ package com.lexuefa.controller;
 
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.lexuefa.comment.result.ResultObject;
-import com.lexuefa.controller.requestEntity.LegalReqParam;
-import com.lexuefa.entity.LegalEntity;
-import com.lexuefa.entity.LegalType;
+import com.lexuefa.controller.reqEntity.LegalReq;
+import com.lexuefa.entity.legal.Chapter;
+import com.lexuefa.entity.legal.Legal;
+import com.lexuefa.entity.legal.LegalType;
 import com.lexuefa.service.LegalService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.repository.query.Param;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -25,12 +25,12 @@ public class LegalController {
 
     /**
      * 获取法律列表
-     * @param legalReqParam
+     * @param legalReq
      * @return
      */
     @PostMapping("/queryLawList")
-    public ResultObject<List<LegalEntity>> queryLawList(@RequestBody LegalReqParam legalReqParam){
-        Page<LegalEntity> legalEntityPage = legalService.queryLawList(legalReqParam);
+    public ResultObject<List<Legal>> queryLawList(@RequestBody LegalReq legalReq){
+        Page<Legal> legalEntityPage = legalService.queryLawList(legalReq);
         return ResultObject.success(legalEntityPage.getRecords());
     }
 
@@ -57,13 +57,19 @@ public class LegalController {
 
     /**
      * 根据内容查询法律
-     * @param legalReqParam
+     * @param legalReq
      * @return
      */
     @PostMapping("/queryLawsByArticle")
-    public ResultObject<List<LegalEntity>> queryLawsByArticle(@RequestBody LegalReqParam legalReqParam){
-        Page<LegalEntity> legalEntityPage = legalService.queryLawsByArticle(legalReqParam);
+    public ResultObject<List<Legal>> queryLawsByArticle(@RequestBody LegalReq legalReq){
+        Page<Legal> legalEntityPage = legalService.queryLawsByArticle(legalReq);
         return ResultObject.success(legalEntityPage.getRecords());
+    }
+
+    @PostMapping("/queryLegalContent")
+    public ResultObject<List<Chapter>> queryLegalContent(@RequestBody LegalReq legalReq){
+        List<Chapter> chapters = legalService.querylegalContent(legalReq);
+        return ResultObject.success(chapters);
     }
     
 }

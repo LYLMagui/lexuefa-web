@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.lexuefa.dao.LegalDao">
+<mapper namespace="com.lexuefa.dao.legal.LegalDao">
     
-    <select id="queryLawsByArticle" resultType="com.lexuefa.entity.LegalEntity">
+    <select id="queryLawsByArticle" resultType="com.lexuefa.entity.legal.Legal">
         select
         d.id AS id,
         d.legal_no AS legalNo,
@@ -21,11 +21,10 @@
         d.update_time AS updateTime
         from legal_document d
         left join legal_chapters c on d.legal_no = c.legal_no
-        where d.second_category = #{legalReqParam.secondCategory}
-        <if test="legalReqParam.article != null and legalReqParam.article != ''">
-            and c.article like CONCAT('%',#{legalReqParam.article},'%')
+        where d.second_category = #{legalReq.secondCategory}
+        <if test="legalReq.article != null and legalReq.article != ''">
+            and c.article like CONCAT('%',#{legalReq.article},'%')
         </if>
         group by d.legal_name
     </select>
-    
 </mapper>
