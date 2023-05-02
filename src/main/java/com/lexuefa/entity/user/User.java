@@ -3,6 +3,10 @@ package com.lexuefa.entity.user;
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableLogic;
+import com.baomidou.mybatisplus.annotation.TableName;
+import lombok.Data;
+import lombok.EqualsAndHashCode;
+import lombok.experimental.Accessors;
 
 import java.time.LocalDateTime;
 
@@ -10,6 +14,10 @@ import java.time.LocalDateTime;
  * @author ukir
  * @date 2023/04/28 22:49
  **/
+@Data
+@EqualsAndHashCode(callSuper = false)
+@Accessors(chain = true)
+@TableName("user")
 public class User {
     /**
      * 主键ID
@@ -32,6 +40,7 @@ public class User {
     /**
      * 个性签名
      */
+    
     private String signature;
 
     /**
@@ -55,19 +64,7 @@ public class User {
      * 是否锁定（0 未锁定，1锁定）
      */
     private Integer locked;
-
-    /**
-     * 创建时间
-     */
-    @TableField("create_time")
-    private LocalDateTime createTime;
-
-    /**
-     * 最后更新时间
-     */
-    @TableField("update_time")
-    private LocalDateTime updateTime;
-
+    
     /**
      * 微信昵称
      */
@@ -81,20 +78,16 @@ public class User {
     private String avatarUrl;
 
     /**
-     * 注册ip
-     */
-    @TableField("register_ip")
-    private String registerIp;
-
-    /**
-     * 最后一次登录ip
-     */
-    @TableField("last_ip")
-    private String lastIp;
-
-    /**
      * 城市
      */
     private String city;
+    
+    @TableField("open_id")
+    private String openId;
+
+    /**
+     * 盐
+     */
+    private String salt;
 
 }

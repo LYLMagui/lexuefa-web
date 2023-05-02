@@ -12,5 +12,8 @@ public class LoginReq {
     private String userName;
     private String password;
     private String code;
+    private String nickName;
+    private String avatarUrl;
+    private String registerType;
     
 }
