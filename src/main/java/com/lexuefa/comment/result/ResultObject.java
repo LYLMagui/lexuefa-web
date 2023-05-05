@@ -36,7 +36,7 @@ public class ResultObject<T> {
      * @return
      * @param <T>
      */
-    public static <T> ResultObject<T> success(T data,String message){
+    public static <T> ResultObject<T> success(String message,T data){
         return new ResultObject<T>(ResultCode.SUCCESS.getCode(),message,data);
     }
 

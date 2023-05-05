@@ -1,16 +1,27 @@
-package com.lexuefa.util;
+package com.lexuefa.utils;
 
+
+import cn.hutool.core.date.DateField;
+import cn.hutool.core.date.DateUtil;
+import com.auth0.jwt.JWT;
+import com.auth0.jwt.JWTVerifier;
+import com.auth0.jwt.algorithms.Algorithm;
+import com.auth0.jwt.interfaces.DecodedJWT;
 import io.jsonwebtoken.Claims;
+import io.jsonwebtoken.ExpiredJwtException;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import lombok.Data;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
+
 import org.springframework.stereotype.Component;
 
 import java.io.Serializable;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Objects;
 
 /**
  * Jwt工具类
@@ -19,19 +30,20 @@ import java.util.Map;
  * @date 2023/03/01 21:12
  **/
 @Component
+@Slf4j
 @Data
 public class JwtTokenUtil implements Serializable {
     /**
      * 密钥
      */
-    @Value("${jwt.jwtsecret}")
-    private String jwtSecret;
+    @Value("${jwt.jwtSecret}")
+    private String jwtSecret = "@Aa123456";
 
     /**
      * 过期时间
      */
     @Value("${jwt.expiration}")
-    private Long expiration;
+    private int expiration;
 
     /**
      * 请求头
@@ -46,8 +58,8 @@ public class JwtTokenUtil implements Serializable {
      */
     private String generateToken(Map<String, Object> claims) {
         //过期时间
-        Date expirationDate = new Date(System.currentTimeMillis() + expiration);
-        return Jwts.builder().setClaims(claims).setExpiration(expirationDate).signWith(SignatureAlgorithm.HS512, jwtSecret).compact();
+        Date date = DateUtil.offset(new Date(), DateField.HOUR, expiration);
+        return Jwts.builder().setClaims(claims).setExpiration(date).signWith(SignatureAlgorithm.HS512, jwtSecret).compact();
     }
 
     /**
@@ -60,8 +72,8 @@ public class JwtTokenUtil implements Serializable {
         Claims claims;
         try {
             claims = Jwts.parser().setSigningKey(jwtSecret).parseClaimsJws(token).getBody();
-        } catch (Exception e) {
-            claims = null;
+        } catch (ExpiredJwtException e) {
+            claims = e.getClaims();
         }
         return claims;
     }
@@ -80,21 +92,22 @@ public class JwtTokenUtil implements Serializable {
     }
 
     /**
-     * 从token中获取用户名称
+     * 从token中获取用户id
      *
      * @param token
      * @return
      */
-    public String getUsernameFromToken(String token) {
-        String username;
+    public Integer getUserIdFromToken(String token) {
+        Integer userId;
         try {
             Claims claims = getClaimsFromToken(token);
-            username = claims.getSubject();
+            userId = (Integer) claims.get("userId");
         } catch (Exception e) {
-            username = null;
+            userId = null;
         }
-        return username;
+        return userId;
     }
+    
 
     /**
      * 判断token是否过期
@@ -112,7 +125,20 @@ public class JwtTokenUtil implements Serializable {
         }
     }
 
-
+    public static void main(String[] args) {
+        String token = "eyJhbGciOiJIUzUxMiJ9.eyJleHAiOjE2ODMyMTIxNjEsInVzZXJJZCI6NTksImNyZWF0ZWQiOjE2ODMyMTIwNDEyNjh9.Dmq46rdKMtJM_pf_lWV11PfnFeD4KZhixgXVEuYE2RRENsQvqsT6bS8WgWQk7YSZbL4DeuXjLjpRgvcJIIhHpg";
+        JwtTokenUtil jwtTokenUtil = new JwtTokenUtil();
+        Boolean exepired = jwtTokenUtil.isExepired(token);
+        //刷新token
+        String refreshToken = null;
+        if(exepired){
+             refreshToken = jwtTokenUtil.refreshToken(token);
+        }
+        log.info("是否过期：{}",exepired);
+        log.info("新token：{}",refreshToken);
+    }
+    
+    
     /**
      * 刷新token
      *
@@ -123,24 +149,21 @@ public class JwtTokenUtil implements Serializable {
         String refreshToken;
         try {
             Claims claims = getClaimsFromToken(token);
-            claims.put("create", new Date());
+            claims.put("created", new Date());
             refreshToken = generateToken(claims);
         } catch (Exception e) {
             refreshToken = null;
         }
         return refreshToken;
     }
-
-    /**
-     * 判断token是否过期
-     *
-     * @param token
-     * @param userDetails
-     * @return
-     */
-//    public Boolean validateToken(String token, UserDetails userDetails) {
-//        JwtUser user = (JwtUser) userDetails;
-//        String username = getUsernameFromToken(token);
-//        return (username.equals(userDetails.getUsername()) && !isExepired(token));
-//    }
+    
+    public void verifierToken(String token){
+        //创建算法对象
+        Algorithm algorithm = Algorithm.HMAC512(jwtSecret);
+        //使用算法对象解密
+        JWTVerifier verifier = JWT.require(algorithm).build();
+        //调用验证方法
+        verifier.verify(token);
+    }
+    
 }

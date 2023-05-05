@@ -6,6 +6,8 @@ import com.lexuefa.entity.user.User;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
+import java.util.Map;
+
 /**
  * UserDao接口
  * @author ukir
@@ -18,18 +20,24 @@ public interface UserDao extends BaseMapper<User> {
      * 通过openId查询用户
      * @return
      */
-    Integer searchIdByOpenId(String openId);
+    User searchIdByOpenId(String openId);
 
     /**
      * 保存用户数据
      * @param loginReq
      */
-    Integer saveUser(@Param("loginReq") LoginReq loginReq, @Param("openId") String openId, @Param("salt") String salt);
+    void saveUser(@Param("loginReq") LoginReq loginReq, @Param("openId") String openId);
 
+    /**
+     * 通过微信注册
+     * @param map
+     */
+    void saveUserByWx(Map<String,String> map);
+    
     /**
      * 通过账号查询用户
      * @param userName
      * @return
      */
-    Integer searchIdByUserName(String userName);
+    User searchIdByUserName(String userName);
 }

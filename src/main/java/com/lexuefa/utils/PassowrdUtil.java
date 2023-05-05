@@ -1,4 +1,4 @@
-package com.lexuefa.util;
+package com.lexuefa.utils;
 
 import cn.hutool.core.lang.UUID;
 import cn.hutool.crypto.digest.DigestUtil;

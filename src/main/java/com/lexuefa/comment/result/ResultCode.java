@@ -10,7 +10,7 @@ import lombok.NoArgsConstructor;
  * @date 2023/04/18 19:55
  **/
 public enum ResultCode implements IErrorCode{
-    SUCCESS(0,"操作成功"),
+    SUCCESS(200,"操作成功"),
     FAILED(500,"操作失败"),
     VALIDATE_FAILED(506,"参数校验失败"),
     UNAUTHORIZED(401,"暂未登录或token已过期"),

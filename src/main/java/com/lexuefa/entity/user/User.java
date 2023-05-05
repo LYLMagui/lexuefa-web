@@ -8,6 +8,7 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
 
+import java.io.Serializable;
 import java.time.LocalDateTime;
 
 /**
@@ -18,7 +19,8 @@ import java.time.LocalDateTime;
 @EqualsAndHashCode(callSuper = false)
 @Accessors(chain = true)
 @TableName("user")
-public class User {
+public class User implements Serializable {
+    private static final long serialVersionUID = -40356785423868312L;
     /**
      * 主键ID
      */
@@ -85,9 +87,7 @@ public class User {
     @TableField("open_id")
     private String openId;
 
-    /**
-     * 盐
-     */
-    private String salt;
-
+    @TableField("session_key")
+    private String sessionKey;
+    
 }
