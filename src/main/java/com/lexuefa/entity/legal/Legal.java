@@ -65,5 +65,9 @@ public class Legal implements Serializable {
 
     @TableField(value = "update_time")
     private LocalDateTime updateTime;
+    
+    //法律级别
+    @TableField(value = "level")
+    private String level;
 
 }

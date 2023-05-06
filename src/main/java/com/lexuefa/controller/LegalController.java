@@ -1,6 +1,7 @@
 package com.lexuefa.controller;
 
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.lexuefa.comment.result.ResultCode;
 import com.lexuefa.comment.result.ResultObject;
 import com.lexuefa.controller.reqEntity.LegalReq;
 import com.lexuefa.entity.legal.Chapter;
@@ -10,7 +11,9 @@ import com.lexuefa.service.LegalService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * 法律 Controller 
@@ -66,10 +69,25 @@ public class LegalController {
         return ResultObject.success(legalEntityPage.getRecords());
     }
 
+    /**
+     * 查询法律内容
+     * @param legalReq
+     * @return
+     */
     @PostMapping("/queryLegalContent")
     public ResultObject<List<Chapter>> queryLegalContent(@RequestBody LegalReq legalReq){
         List<Chapter> chapters = legalService.querylegalContent(legalReq);
         return ResultObject.success(chapters);
+    }
+
+    /**
+     * 最新法律列表
+     * @return
+     */
+    @GetMapping("/queryLastLaws")
+    public ResultObject<List<Legal>> queryLastLaws(){
+        List<Legal> lastLaws = legalService.queryLastLaws();
+        return ResultObject.success(lastLaws);
     }
     
 }

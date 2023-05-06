@@ -42,10 +42,12 @@ public class LegalServiceImpl extends ServiceImpl<LegalDao, Legal> implements Le
      */
     @Override
     public Page<Legal> queryLawList(LegalReq legalReq) {
+        String[] levels = legalReq.getLevels().split(",");
         Page<Legal> page = new Page<>(legalReq.getPageNo(), legalReq.getPageSize());
         LambdaQueryWrapper<Legal> wrapper = new LambdaQueryWrapper<>();
         wrapper.like(StringUtils.isNotBlank(legalReq.legalName), Legal::getLegalName, legalReq.legalName)
-                .eq(Legal::getSecondCategory, legalReq.getSecondCategory());
+                .eq(Legal::getSecondCategory, legalReq.getSecondCategory())
+                .in(Legal::getLevel,levels);
         return legalDao.selectPage(page, wrapper);
     }
 
@@ -117,5 +119,17 @@ public class LegalServiceImpl extends ServiceImpl<LegalDao, Legal> implements Le
 
         });
         return chapters;
+    }
+
+    /**
+     * 最新法律列表
+     *
+     * @return
+     */
+    @Override
+    public List<Legal> queryLastLaws() {
+        Page<Legal> page = new Page<>(1,10);
+        Page<Legal> legalPage = legalDao.queryLastLaw(page);
+        return legalPage.getRecords();
     }
 }

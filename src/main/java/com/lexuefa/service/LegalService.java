@@ -47,4 +47,10 @@ public interface LegalService extends IService<Legal> {
      * @return
      */
     List<Chapter> querylegalContent(LegalReq legalReq);
+
+    /**
+     * 最新法律列表
+     * @return
+     */
+    List<Legal> queryLastLaws();
 }

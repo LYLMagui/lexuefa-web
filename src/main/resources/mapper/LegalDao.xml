@@ -27,4 +27,24 @@
         </if>
         group by d.legal_name
     </select>
+    <select id="queryLastLaw" resultType="com.lexuefa.entity.legal.Legal">
+        select
+            id AS id,
+            legal_no AS legalNo,
+            legal_name AS legalName,
+            top_category AS topCategory,
+            second_category AS secondCategory,
+            version AS version,
+            activity AS activity,
+            is_deleted AS isDeleted,
+            publish_time AS publishTime,
+            start_time AS startTime,
+            document_number AS documentNumber,
+            enact_agency AS enactAgency,
+            preface AS preface,
+            create_time AS createTime,
+            update_time AS updateTime
+        from legal_document
+        order by start_time desc
+    </select>
 </mapper>

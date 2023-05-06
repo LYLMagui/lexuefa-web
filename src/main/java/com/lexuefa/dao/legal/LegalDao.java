@@ -22,6 +22,12 @@ public interface LegalDao extends BaseMapper<Legal> {
      * @return
      */
     Page<Legal> queryLawsByArticle(IPage<Legal> page, LegalReq legalReq);
-    
+
+    /**
+     * 最新法律列表
+     * @return
+     */
+    Page<Legal> queryLastLaw(Page<Legal> page);
+
 //    List<Chapter> querylegalContent(LegalReqParam legalReqParam);
 }

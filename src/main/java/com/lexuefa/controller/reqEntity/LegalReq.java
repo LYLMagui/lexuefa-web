@@ -36,4 +36,6 @@ public class LegalReq {
     
     public int pageSize;
     
+    private String levels;
+    
 }
